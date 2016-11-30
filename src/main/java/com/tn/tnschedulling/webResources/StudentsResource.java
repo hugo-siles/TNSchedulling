@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tn.tnschedulling.service;
+package com.tn.tnschedulling.webResources;
 
 import com.tn.tnschedulling.exceptions.DaoException;
-import com.tn.tnschedulling.logic.SchedullingClassesLogic;
-import com.tn.tnschedulling.model.Classes;
-import com.tn.tnschedulling.model.Students;
+import com.tn.tnschedulling.exceptions.ProcessException;
+import com.tn.tnschedulling.services.SchedullingStudentService;
+import com.tn.tnschedulling.model.Class;
+import com.tn.tnschedulling.model.Student;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,20 +31,21 @@ import javax.ws.rs.core.MediaType;
  * @author hugo.siles
  */
 @Stateless
-@Path("classes")
-public class ClassesResource {
+@Path("students")
+public class StudentsResource {
     
     @EJB
-    SchedullingClassesLogic logic;
+    SchedullingStudentService logic;
 
-    public ClassesResource() {
+
+    public StudentsResource() {
     }
 
     @POST
     @Consumes({MediaType.APPLICATION_XML})
-    public void create(Classes entity) {
+    public void create(Student entity) {
         try {
-            logic.createClass(entity);
+            logic.createStudent(entity);
         } catch (DaoException ex) {
              Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
                     "Exception while saving new class", ex);
@@ -51,11 +53,11 @@ public class ClassesResource {
     }
 
     @PUT
-    @Path("{code}")
+    @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML})
-    public void edit(@PathParam("code") String code, Classes entity) {
+    public void edit(@PathParam("id") Integer id, Student entity) {
         try {
-            logic.editClass(code, entity);
+            logic.editStudent(id, entity);
         } catch (DaoException ex) {
              Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
                     "Exception while editing existing class", ex);
@@ -63,23 +65,23 @@ public class ClassesResource {
     }
 
     @DELETE
-    @Path("{code}")
-    public void remove(@PathParam("code") String code) {
+    @Path("{id}")
+    public void remove(@PathParam("id") Integer id) {
         try {
-            logic.removeClass(code);
+            logic.removeStudent(id);
         } catch (DaoException ex) {
              Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
-                    "Exception while removing class with code: " + code, ex);
+                    "Exception while removing class with code: " + id, ex);
         }
     }
 
     @GET
-    @Path("{code}")
+    @Path("{id}")
     @Produces({MediaType.APPLICATION_XML})
-    public Classes find(@PathParam("code") String code) {
-        Classes result = null;
+    public Student find(@PathParam("id") Integer id) {
+        Student result = null;
         try {
-            result = logic.findClassByCode(code);
+            result = logic.findStudentById(id);
         } catch (DaoException ex) {
             Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
                     "Exception while retrieving information", ex);
@@ -90,26 +92,27 @@ public class ClassesResource {
 
     @GET
     @Produces({MediaType.APPLICATION_XML})
-    public List<Classes> findAll() {
-        return logic.findAllClasses();
+    public List<Student> findAll() {
+        return logic.findAllStudents();
     }
-    
+
     @GET
-    @Path("studentsInClass/{code}")
+    @Path("classesForStudent/{id}")
     @Produces({MediaType.APPLICATION_XML})
-    public List<Students> findStudentsInClass(@PathParam("code") String code) {
+    public List<Class> findClassesForStudent(@PathParam("id") Integer id) {
         
-        List<Students> result = new ArrayList<>();
+        List<Class> result = new ArrayList<>();
         try {
-            result = logic.findStudentsInClass(code);
+            result = logic.findClassesForStudent(id);
         } catch (DaoException ex) {
             Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
                     "Exception while retrieving information", ex);
+        } catch (ProcessException ex) {
+            Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
+                    "Exception while processing the information obtained ", ex);
         }
         
         return result;
- 
     }
 
-   
 }

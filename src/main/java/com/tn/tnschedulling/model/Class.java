@@ -16,14 +16,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author hugo.siles
  */
 @XmlRootElement
-public class Classes {
+public class Class {
     
     private String code;
     private String title;
     private String description;
-    private List<Students> registeredStudents;
+    private List<Student> registeredStudents;
 
-    public Classes() {
+    public Class() {
         registeredStudents = new ArrayList<>();
     }
 
@@ -51,7 +51,7 @@ public class Classes {
         this.description = description;
     }
     
-    public void registerStudent(Students newStudent){
+    public void registerStudent(Student newStudent){
         
         if (registeredStudents.contains(newStudent)){
             return;
@@ -60,7 +60,7 @@ public class Classes {
         registeredStudents.add(newStudent);
     }
 
-    public List<Students> getRegisteredStudents() {
+    public List<Student> getRegisteredStudents() {
         return Collections.unmodifiableList(registeredStudents);
     }      
 
@@ -82,7 +82,7 @@ public class Classes {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Classes other = (Classes) obj;
+        final Class other = (Class) obj;
         
         return Objects.equals(this.code, other.code);
     }

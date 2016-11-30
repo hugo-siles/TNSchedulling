@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tn.tnschedulling.logic;
+package com.tn.tnschedulling.services;
 
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -12,11 +12,11 @@ import javax.persistence.EntityManager;
  *
  * @author hugo.siles
  */
-public abstract class AbstracLogic<T> {
+public abstract class AbstracService<T> {
 
     private final Class<T> entityClass;
 
-    public AbstracLogic(Class<T> entityClass) {
+    public AbstracService(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 

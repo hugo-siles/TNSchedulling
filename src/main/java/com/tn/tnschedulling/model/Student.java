@@ -15,14 +15,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author hugo.siles
  */
 @XmlRootElement
-public class Students {
+public class Student {
     
     private int id;
     private String firstName;
     private String lastName;
-    private List<Classes> enrolledClasses = new ArrayList<>();
+    private List<Class> enrolledClasses = new ArrayList<>();
 
-    public Students() {
+    public Student() {
     }
 
     public int getId() {
@@ -49,7 +49,7 @@ public class Students {
         this.lastName = lastName;
     }
     
-    public void enrollToClass(Classes newClass) {
+    public void enrollToClass(Class newClass) {
         if (enrolledClasses.contains(newClass)) {
             return;
         }
@@ -57,7 +57,7 @@ public class Students {
         enrolledClasses.add(newClass);        
     }
 
-    public List<Classes> getEnrolledClasses() {
+    public List<Class> getEnrolledClasses() {
         return Collections.unmodifiableList(enrolledClasses);
     }
  
@@ -79,7 +79,7 @@ public class Students {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Students other = (Students) obj;
+        final Student other = (Student) obj;
         return this.id == other.id;
     }
   

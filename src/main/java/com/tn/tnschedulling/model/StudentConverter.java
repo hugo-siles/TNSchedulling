@@ -5,8 +5,8 @@
  */
 package com.tn.tnschedulling.model;
 
-import com.tn.tnschedulling.entities.JpaClasses;
-import com.tn.tnschedulling.entities.JpaStudents;
+import com.tn.tnschedulling.entities.JpaClass;
+import com.tn.tnschedulling.entities.JpaStudent;
 
 /**
  *
@@ -14,14 +14,14 @@ import com.tn.tnschedulling.entities.JpaStudents;
  */
 public class StudentConverter {
     
-    public Students convertJpaToModel(JpaStudents jpaStudent){        
-        Students result = new Students();
+    public Student convertJpaToModel(JpaStudent jpaStudent){        
+        Student result = new Student();
         result.setId(jpaStudent.getId());
         result.setFirstName(jpaStudent.getFirstname());
         result.setLastName(jpaStudent.getLastname());
         
-        for(JpaClasses jpaClass : jpaStudent.getClassesCollection()) {
-            Classes aClass = new Classes();
+        for(JpaClass jpaClass : jpaStudent.getClassesCollection()) {
+            Class aClass = new Class();
             aClass.setCode(jpaClass.getCode());
             aClass.setTitle(jpaClass.getTitle());            
             aClass.setDescription(jpaClass.getDescription());
@@ -32,15 +32,15 @@ public class StudentConverter {
         return result;
     }
     
-    public JpaStudents convertModelToJpa(Students aStudent){
+    public JpaStudent convertModelToJpa(Student aStudent){
         
-        JpaStudents result = new JpaStudents();
+        JpaStudent result = new JpaStudent();
         result.setId(aStudent.getId());
         result.setFirstname(aStudent.getFirstName());
         result.setLastname(aStudent.getLastName());
 
-        for (Classes aClass : aStudent.getEnrolledClasses()) {
-            JpaClasses jpaClass = new JpaClasses();
+        for (Class aClass : aStudent.getEnrolledClasses()) {
+            JpaClass jpaClass = new JpaClass();
             jpaClass.setCode(aClass.getCode());
             jpaClass.setTitle(aClass.getTitle());
             jpaClass.setDescription(aClass.getDescription());

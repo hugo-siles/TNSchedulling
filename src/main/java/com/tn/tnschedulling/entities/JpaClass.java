@@ -28,11 +28,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "classes")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "JpaClasses.findAll", query = "SELECT c FROM JpaClasses c")
-    , @NamedQuery(name = "JpaClasses.findByCode", query = "SELECT c FROM JpaClasses c WHERE c.code = :code")
-    , @NamedQuery(name = "JpaClasses.findByTitle", query = "SELECT c FROM JpaClasses c WHERE c.title = :title")
-    , @NamedQuery(name = "JpaClasses.findByDescription", query = "SELECT c FROM JpaClasses c WHERE c.description = :description")})
-public class JpaClasses implements Serializable {
+    @NamedQuery(name = "JpaClass.findAll", query = "SELECT c FROM JpaClass c")
+    , @NamedQuery(name = "JpaClass.findByCode", query = "SELECT c FROM JpaClass c WHERE c.code = :code")
+    , @NamedQuery(name = "JpaClass.findByTitle", query = "SELECT c FROM JpaClass c WHERE c.title = :title")
+    , @NamedQuery(name = "JpaClass.findByDescription", query = "SELECT c FROM JpaClasses c WHERE c.description = :description")})
+public class JpaClass implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,16 +52,16 @@ public class JpaClasses implements Serializable {
     @Column(name = "description")
     private String description;
     @ManyToMany(mappedBy = "classesCollection")
-    private Collection<JpaStudents> studentsCollection;
+    private Collection<JpaStudent> studentsCollection;
 
-    public JpaClasses() {
+    public JpaClass() {
     }
 
-    public JpaClasses(String code) {
+    public JpaClass(String code) {
         this.code = code;
     }
 
-    public JpaClasses(String code, String title, String description) {
+    public JpaClass(String code, String title, String description) {
         this.code = code;
         this.title = title;
         this.description = description;
@@ -92,11 +92,11 @@ public class JpaClasses implements Serializable {
     }
 
     @XmlTransient
-    public Collection<JpaStudents> getStudentsCollection() {
+    public Collection<JpaStudent> getStudentsCollection() {
         return studentsCollection;
     }
 
-    public void setStudentsCollection(Collection<JpaStudents> studentsCollection) {
+    public void setStudentsCollection(Collection<JpaStudent> studentsCollection) {
         this.studentsCollection = studentsCollection;
     }
 
@@ -110,16 +110,16 @@ public class JpaClasses implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof JpaClasses)) {
+        if (!(object instanceof JpaClass)) {
             return false;
         }
-        JpaClasses other = (JpaClasses) object;
+        JpaClass other = (JpaClass) object;
         return !((this.code == null && other.code != null) || (this.code != null && !this.code.equals(other.code)));
     }
 
     @Override
     public String toString() {
-        return "com.tn.tnschedulling.entities.JpaClasses[ code=" + code + " ]";
+        return "com.tn.tnschedulling.entities.JpaClass[ code=" + code + " ]";
     }
     
 }

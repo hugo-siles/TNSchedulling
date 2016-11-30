@@ -30,11 +30,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "students")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "JpaStudents.findAll", query = "SELECT s FROM JpaStudents s")
-    , @NamedQuery(name = "JpaStudents.findById", query = "SELECT s FROM JpaStudents s WHERE s.id = :id")
-    , @NamedQuery(name = "JpaStudents.findByLastname", query = "SELECT s FROM JpaStudents s WHERE s.lastname = :lastname")
-    , @NamedQuery(name = "JpaStudents.findByFirstname", query = "SELECT s FROM JpaStudents s WHERE s.firstname = :firstname")})
-public class JpaStudents implements Serializable {
+    @NamedQuery(name = "JpaStudent.findAll", query = "SELECT s FROM JpaStudent s")
+    , @NamedQuery(name = "JpaStudent.findById", query = "SELECT s FROM JpaStudent s WHERE s.id = :id")
+    , @NamedQuery(name = "JpaStudent.findByLastname", query = "SELECT s FROM JpaStudent s WHERE s.lastname = :lastname")
+    , @NamedQuery(name = "JpaStudent.findByFirstname", query = "SELECT s FROM JpaStudent s WHERE s.firstname = :firstname")})
+public class JpaStudent implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,16 +56,16 @@ public class JpaStudents implements Serializable {
         @JoinColumn(name = "student_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "class_code", referencedColumnName = "code")})
     @ManyToMany
-    private Collection<JpaClasses> classesCollection;
+    private Collection<JpaClass> classesCollection;
 
-    public JpaStudents() {
+    public JpaStudent() {
     }
 
-    public JpaStudents(Integer id) {
+    public JpaStudent(Integer id) {
         this.id = id;
     }
 
-    public JpaStudents(Integer id, String lastname, String firstname) {
+    public JpaStudent(Integer id, String lastname, String firstname) {
         this.id = id;
         this.lastname = lastname;
         this.firstname = firstname;
@@ -96,11 +96,11 @@ public class JpaStudents implements Serializable {
     }
 
     @XmlTransient
-    public Collection<JpaClasses> getClassesCollection() {
+    public Collection<JpaClass> getClassesCollection() {
         return classesCollection;
     }
 
-    public void setClassesCollection(Collection<JpaClasses> classesCollection) {
+    public void setClassesCollection(Collection<JpaClass> classesCollection) {
         this.classesCollection = classesCollection;
     }
 
@@ -114,16 +114,16 @@ public class JpaStudents implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof JpaStudents)) {
+        if (!(object instanceof JpaStudent)) {
             return false;
         }
-        JpaStudents other = (JpaStudents) object;
+        JpaStudent other = (JpaStudent) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
     public String toString() {
-        return "com.tn.tnschedulling.entities.JpaStudents[ id=" + id + " ]";
+        return "com.tn.tnschedulling.entities.JpaStudent[ id=" + id + " ]";
     }
     
 }

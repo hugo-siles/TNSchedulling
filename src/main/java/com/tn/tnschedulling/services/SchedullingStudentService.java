@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tn.tnschedulling.logic;
+package com.tn.tnschedulling.services;
 
-import com.tn.tnschedulling.entities.JpaClasses;
-import com.tn.tnschedulling.entities.JpaStudents;
+import com.tn.tnschedulling.entities.JpaClass;
+import com.tn.tnschedulling.entities.JpaStudent;
 import com.tn.tnschedulling.exceptions.DaoException;
+import com.tn.tnschedulling.exceptions.ProcessException;
 import com.tn.tnschedulling.model.ClassConverter;
-import com.tn.tnschedulling.model.Classes;
+import com.tn.tnschedulling.model.Class;
 import com.tn.tnschedulling.model.StudentConverter;
-import com.tn.tnschedulling.model.Students;
+import com.tn.tnschedulling.model.Student;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -24,13 +25,13 @@ import javax.persistence.PersistenceException;
  * @author hugo.siles
  */
 @Stateless
-public class SchedullingStudentsLogic extends AbstracLogic {
+public class SchedullingStudentService extends AbstracService {
     
     @PersistenceContext(unitName = "TNSchedullingPU")
     private EntityManager em;
 
-    public SchedullingStudentsLogic() {
-        super(JpaStudents.class);
+    public SchedullingStudentService() {
+        super(JpaStudent.class);
     }
     
     @Override
@@ -38,18 +39,18 @@ public class SchedullingStudentsLogic extends AbstracLogic {
         return em;
     }
     
-    public void createStudent(Students entity) throws DaoException {
+    public void createStudent(Student entity) throws DaoException {
         try {
-            JpaStudents jpatudent = new StudentConverter().convertModelToJpa(entity);
+            JpaStudent jpatudent = new StudentConverter().convertModelToJpa(entity);
             super.create(jpatudent);
         } catch (PersistenceException pex){
             throw new DaoException("Object already exists in data base");
         }
     }
 
-    public void editStudent(Integer id, Students entity) throws DaoException {
+    public void editStudent(Integer id, Student entity) throws DaoException {
         try {
-            JpaStudents jpaClass = new StudentConverter().convertModelToJpa(entity);
+            JpaStudent jpaClass = new StudentConverter().convertModelToJpa(entity);
             super.edit(jpaClass);
         } catch (PersistenceException pex){
             throw new DaoException("Object already exists in data base");
@@ -64,9 +65,9 @@ public class SchedullingStudentsLogic extends AbstracLogic {
         }
     }
     
-    public Students findStudentById(Integer code) throws DaoException {
+    public Student findStudentById(Integer code) throws DaoException {
         
-        JpaStudents jpaStudent = (JpaStudents) super.find(code);        
+        JpaStudent jpaStudent = (JpaStudent) super.find(code);        
         if (jpaStudent == null){
             throw new DaoException("entity not found in DB");
         }        
@@ -74,11 +75,11 @@ public class SchedullingStudentsLogic extends AbstracLogic {
         return new StudentConverter().convertJpaToModel(jpaStudent);
     }
 
-    public List<Students> findAllStudents() {
-        List<Students> result = new ArrayList<>();
+    public List<Student> findAllStudents() {
+        List<Student> result = new ArrayList<>();
         
-        List<JpaStudents> existingClasses = super.findAll();        
-        for(JpaStudents jpaClass : existingClasses){
+        List<JpaStudent> existingClasses = super.findAll();        
+        for(JpaStudent jpaClass : existingClasses){
             result.add(new StudentConverter().convertJpaToModel(jpaClass));
         }
         
@@ -86,16 +87,16 @@ public class SchedullingStudentsLogic extends AbstracLogic {
         
     }
 
-    public List<Classes> findClassesForStudent(Integer id) throws DaoException {
+    public List<Class> findClassesForStudent(Integer id) throws DaoException, ProcessException {
         
-        List<Classes> result = new ArrayList<>();
+        List<Class> result = new ArrayList<>();
         
-        JpaStudents jpaStudent = (JpaStudents) super.find(id);        
+        JpaStudent jpaStudent = (JpaStudent) super.find(id);        
         if (jpaStudent == null){
             throw new DaoException("entity not found in DB");
         } 
         
-        for (JpaClasses jpaclass : jpaStudent.getClassesCollection()){
+        for (JpaClass jpaclass : jpaStudent.getClassesCollection()){
             result.add(new ClassConverter().convertJpaToModel(jpaclass));
                     
         }

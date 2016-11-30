@@ -5,48 +5,61 @@
  */
 package com.tn.tnschedulling.model;
 
-import com.tn.tnschedulling.entities.JpaClasses;
-import com.tn.tnschedulling.entities.JpaStudents;
+import com.tn.tnschedulling.entities.JpaClass;
+import com.tn.tnschedulling.entities.JpaStudent;
+import com.tn.tnschedulling.exceptions.ProcessException;
 
 /**
  *
  * @author hugo.siles
  */
 public class ClassConverter {
-    
-    public Classes convertJpaToModel(JpaClasses jpaClass){        
-        Classes result = new Classes();
-        result.setCode(jpaClass.getCode());
-        result.setTitle(jpaClass.getTitle());
-        result.setDescription(jpaClass.getDescription());
-        
-        for(JpaStudents jpaStudents : jpaClass.getStudentsCollection()){
-            Students newStudent = new Students();
-            newStudent.setId(jpaStudents.getId());
-            newStudent.setFirstName(jpaStudents.getFirstname());
-            newStudent.setLastName(jpaStudents.getLastname());
-            result.registerStudent(newStudent);            
+
+    public Class convertJpaToModel(JpaClass jpaClass) throws ProcessException {
+
+        try {
+            Class result = new Class();
+            result.setCode(jpaClass.getCode());
+            result.setTitle(jpaClass.getTitle());
+            result.setDescription(jpaClass.getDescription());
+
+            for (JpaStudent jpaStudents : jpaClass.getStudentsCollection()) {
+                Student newStudent = new Student();
+                newStudent.setId(jpaStudents.getId());
+                newStudent.setFirstName(jpaStudents.getFirstname());
+                newStudent.setLastName(jpaStudents.getLastname());
+                result.registerStudent(newStudent);
+            }
+
+            return result;
+        } catch (Exception ex) {
+            throw new ProcessException("Exception while converting a class from JPA to Model " + ex.getMessage());
+
         }
-        
-        return result;
     }
-    
-    public JpaClasses convertModelToJpa(Classes aClass){
-        
-        JpaClasses result = new JpaClasses();
-        result.setCode(aClass.getCode());
-        result.setTitle(aClass.getTitle());
-        result.setDescription(aClass.getDescription());
-        
-        for(Students students : aClass.getRegisteredStudents()){
-            JpaStudents jpaStudent = new JpaStudents();
-            jpaStudent.setId(students.getId());
-            jpaStudent.setFirstname(students.getFirstName());
-            jpaStudent.setLastname(students.getLastName());
-            result.getStudentsCollection().add(jpaStudent);            
+
+    public JpaClass convertModelToJpa(Class aClass) throws ProcessException {
+
+        try {
+
+            JpaClass result = new JpaClass();
+            result.setCode(aClass.getCode());
+            result.setTitle(aClass.getTitle());
+            result.setDescription(aClass.getDescription());
+
+            for (Student students : aClass.getRegisteredStudents()) {
+                JpaStudent jpaStudent = new JpaStudent();
+                jpaStudent.setId(students.getId());
+                jpaStudent.setFirstname(students.getFirstName());
+                jpaStudent.setLastname(students.getLastName());
+                result.getStudentsCollection().add(jpaStudent);
+            }
+
+            return result;
+        } catch (Exception ex) {
+            throw new ProcessException("Exception while converting a class from Model to JPA " + ex.getMessage());
+
         }
-        
-        return result;
     }
 
 }
