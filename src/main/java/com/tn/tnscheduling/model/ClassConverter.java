@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tn.tnschedulling.model;
+package com.tn.tnscheduling.model;
 
-import com.tn.tnschedulling.entities.JpaClass;
-import com.tn.tnschedulling.entities.JpaStudent;
-import com.tn.tnschedulling.exceptions.ProcessException;
+import com.tn.tnscheduling.entities.JpaClass;
+import com.tn.tnscheduling.entities.JpaStudent;
+import com.tn.tnscheduling.exceptions.ProcessException;
 
 /**
  *

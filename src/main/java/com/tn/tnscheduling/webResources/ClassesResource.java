@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tn.tnschedulling.webResources;
+package com.tn.tnscheduling.webResources;
 
-import com.tn.tnschedulling.exceptions.DaoException;
-import com.tn.tnschedulling.exceptions.ProcessException;
-import com.tn.tnschedulling.services.SchedullingClassService;
-import com.tn.tnschedulling.model.Class;
-import com.tn.tnschedulling.model.Student;
+import com.tn.tnscheduling.exceptions.DaoException;
+import com.tn.tnscheduling.exceptions.ProcessException;
+import com.tn.tnscheduling.services.SchedullingClassService;
+import com.tn.tnscheduling.model.Class;
+import com.tn.tnscheduling.model.Student;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -41,6 +41,10 @@ public class ClassesResource {
     public ClassesResource() {
     }
 
+    ClassesResource(SchedullingClassService logic) {
+        this.logic = logic;
+    }
+    
     @POST
     @Consumes({MediaType.APPLICATION_XML})
     public Response create(Class entity) {

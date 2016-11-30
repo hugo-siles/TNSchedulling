@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tn.tnschedulling.exceptions;
+package com.tn.tnscheduling.exceptions;
 
 /**
  *
  * @author hugo.siles
  */
-public class DaoException extends Exception {
+public class ProcessException extends Exception {
 
-    public DaoException(String string) {
+    public ProcessException(String string) {
         super(string);
     }
-           
+    
 }

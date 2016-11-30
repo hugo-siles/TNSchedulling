@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tn.tnschedulling.model;
+package com.tn.tnscheduling.model;
 
 import java.util.ArrayList;
 import java.util.Collections;

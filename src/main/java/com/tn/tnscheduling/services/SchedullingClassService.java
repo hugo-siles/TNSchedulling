@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tn.tnschedulling.services;
+package com.tn.tnscheduling.services;
 
-import com.tn.tnschedulling.entities.JpaClass;
-import com.tn.tnschedulling.entities.JpaStudent;
-import com.tn.tnschedulling.exceptions.DaoException;
-import com.tn.tnschedulling.exceptions.ProcessException;
-import com.tn.tnschedulling.model.ClassConverter;
-import com.tn.tnschedulling.model.Class;
-import com.tn.tnschedulling.model.StudentConverter;
-import com.tn.tnschedulling.model.Student;
+import com.tn.tnscheduling.entities.JpaClass;
+import com.tn.tnscheduling.entities.JpaStudent;
+import com.tn.tnscheduling.exceptions.DaoException;
+import com.tn.tnscheduling.exceptions.ProcessException;
+import com.tn.tnscheduling.model.ClassConverter;
+import com.tn.tnscheduling.model.Class;
+import com.tn.tnscheduling.model.StudentConverter;
+import com.tn.tnscheduling.model.Student;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
