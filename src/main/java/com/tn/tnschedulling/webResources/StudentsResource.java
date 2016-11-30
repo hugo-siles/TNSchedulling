@@ -25,6 +25,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -43,36 +44,49 @@ public class StudentsResource {
 
     @POST
     @Consumes({MediaType.APPLICATION_XML})
-    public void create(Student entity) {
+    public Response create(Student entity) {
+        
+        Response result = Response.notModified().build();
         try {
             logic.createStudent(entity);
+            result = Response.ok().build();
         } catch (DaoException ex) {
              Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
                     "Exception while saving new class", ex);
         }
+        
+        return result;
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML})
-    public void edit(@PathParam("id") Integer id, Student entity) {
+    public Response edit(@PathParam("id") Integer id, Student entity) {
+        Response result = Response.notModified().build();
         try {
             logic.editStudent(id, entity);
+            result = Response.ok().build();
         } catch (DaoException ex) {
              Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
                     "Exception while editing existing class", ex);
         }
+        
+        return result;
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
+    public Response remove(@PathParam("id") Integer id) {
+        Response result = Response.notModified().build();
         try {
             logic.removeStudent(id);
+            result = Response.ok().build();
         } catch (DaoException ex) {
              Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
                     "Exception while removing class with code: " + id, ex);
         }
+        
+        return result;
     }
 
     @GET

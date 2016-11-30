@@ -25,6 +25,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -42,9 +43,11 @@ public class ClassesResource {
 
     @POST
     @Consumes({MediaType.APPLICATION_XML})
-    public void create(Class entity) {
+    public Response create(Class entity) {
+        Response result = Response.notModified().build();
         try {
             logic.createClass(entity);
+            result = Response.ok().build();
         } catch (DaoException ex) {
              Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
                     "Exception while saving new class", ex);
@@ -52,14 +55,20 @@ public class ClassesResource {
             Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
                     "Exception while processing the information obtained ", ex);
         }
+        
+        return result;
     }
 
     @PUT
     @Path("{code}")
     @Consumes({MediaType.APPLICATION_XML})
-    public void edit(@PathParam("code") String code, Class entity) {
+    public Response edit(@PathParam("code") String code, Class entity) {
+        
+        Response result = Response.notModified().build();
+        
         try {
             logic.editClass(code, entity);
+            result = Response.ok().build();
         } catch (DaoException ex) {
              Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
                     "Exception while editing existing class", ex);
@@ -67,17 +76,23 @@ public class ClassesResource {
             Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
                     "Exception while processing the information obtained ", ex);
         }
+        
+        return result;
     }
 
     @DELETE
     @Path("{code}")
-    public void remove(@PathParam("code") String code) {
+    public Response remove(@PathParam("code") String code) {
+        
+        Response result = Response.notModified().build();
         try {
             logic.removeClass(code);
+            result = Response.ok().build();
         } catch (DaoException ex) {
              Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
                     "Exception while removing class with code: " + code, ex);
         }
+        return result;
     }
 
     @GET
