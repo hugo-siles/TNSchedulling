@@ -7,7 +7,6 @@ package com.tn.tnschedulling.logic;
 
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
 
 /**
  *

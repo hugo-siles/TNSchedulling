@@ -9,6 +9,7 @@ import com.tn.tnschedulling.exceptions.DaoException;
 import com.tn.tnschedulling.logic.SchedullingClassesLogic;
 import com.tn.tnschedulling.model.Classes;
 import com.tn.tnschedulling.model.Students;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,11 +51,11 @@ public class ClassesResource {
     }
 
     @PUT
-    @Path("{id}")
+    @Path("{code}")
     @Consumes({MediaType.APPLICATION_XML})
-    public void edit(@PathParam("id") String id, Classes entity) {
+    public void edit(@PathParam("code") String code, Classes entity) {
         try {
-            logic.editClass(id, entity);
+            logic.editClass(code, entity);
         } catch (DaoException ex) {
              Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
                     "Exception while editing existing class", ex);
@@ -62,13 +63,13 @@ public class ClassesResource {
     }
 
     @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") String id) {
+    @Path("{code}")
+    public void remove(@PathParam("code") String code) {
         try {
-            logic.removeClass(id);
+            logic.removeClass(code);
         } catch (DaoException ex) {
              Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
-                    "Exception while removing class with code: " + id, ex);
+                    "Exception while removing class with code: " + code, ex);
         }
     }
 
@@ -94,11 +95,20 @@ public class ClassesResource {
     }
     
     @GET
-    @Path("findStudentsInClass/{id}")
+    @Path("studentsInClass/{code}")
     @Produces({MediaType.APPLICATION_XML})
-    public List<Students> findStudentsInClass(@PathParam("id") Integer id) {
+    public List<Students> findStudentsInClass(@PathParam("code") String code) {
         
-        return null;
+        List<Students> result = new ArrayList<>();
+        try {
+            result = logic.findStudentsInClass(code);
+        } catch (DaoException ex) {
+            Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
+                    "Exception while retrieving information", ex);
+        }
+        
+        return result;
+ 
     }
 
    

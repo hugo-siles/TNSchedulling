@@ -48,5 +48,5 @@ public class ClassConverter {
         
         return result;
     }
-    
+
 }

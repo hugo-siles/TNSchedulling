@@ -5,12 +5,16 @@
  */
 package com.tn.tnschedulling.service;
 
-import com.tn.tnschedulling.entities.JpaStudents;
+import com.tn.tnschedulling.exceptions.DaoException;
+import com.tn.tnschedulling.logic.SchedullingStudentsLogic;
 import com.tn.tnschedulling.model.Classes;
+import com.tn.tnschedulling.model.Students;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -28,53 +32,83 @@ import javax.ws.rs.core.MediaType;
 @Stateless
 @Path("students")
 public class StudentsResource {
+    
+    @EJB
+    SchedullingStudentsLogic logic;
 
-    @PersistenceContext(unitName = "TNSchedullingPU")
-    private EntityManager em;
 
     public StudentsResource() {
     }
 
     @POST
     @Consumes({MediaType.APPLICATION_XML})
-    public void create(JpaStudents entity) {
-        //super.create(entity);
+    public void create(Students entity) {
+        try {
+            logic.createStudent(entity);
+        } catch (DaoException ex) {
+             Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
+                    "Exception while saving new class", ex);
+        }
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML})
-    public void edit(@PathParam("id") Integer id, JpaStudents entity) {
-        //super.edit(entity);
+    public void edit(@PathParam("id") Integer id, Students entity) {
+        try {
+            logic.editStudent(id, entity);
+        } catch (DaoException ex) {
+             Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
+                    "Exception while editing existing class", ex);
+        }
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Integer id) {
-        //super.remove(super.find(id));
+        try {
+            logic.removeStudent(id);
+        } catch (DaoException ex) {
+             Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
+                    "Exception while removing class with code: " + id, ex);
+        }
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML})
-    public JpaStudents find(@PathParam("id") Integer id) {
-        //return super.find(id);
-        return null;
+    public Students find(@PathParam("id") Integer id) {
+        Students result = null;
+        try {
+            result = logic.findStudentById(id);
+        } catch (DaoException ex) {
+            Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
+                    "Exception while retrieving information", ex);
+        }
+        
+        return result;
     }
 
     @GET
     @Produces({MediaType.APPLICATION_XML})
-    public List<JpaStudents> findAll() {
-        //return super.findAll();
-        return null;
+    public List<Students> findAll() {
+        return logic.findAllStudents();
     }
 
     @GET
-    @Path("findClassesForStudent/{id}")
+    @Path("classesForStudent/{id}")
     @Produces({MediaType.APPLICATION_XML})
     public List<Classes> findClassesForStudent(@PathParam("id") Integer id) {
         
-        return null;
+        List<Classes> result = new ArrayList<>();
+        try {
+            result = logic.findClassesForStudent(id);
+        } catch (DaoException ex) {
+            Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
+                    "Exception while retrieving information", ex);
+        }
+        
+        return result;
     }
 
 }

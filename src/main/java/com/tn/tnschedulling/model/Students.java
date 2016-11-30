@@ -5,6 +5,7 @@
  */
 package com.tn.tnschedulling.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -19,7 +20,7 @@ public class Students {
     private int id;
     private String firstName;
     private String lastName;
-    private List<Classes> enrolledClasses;
+    private List<Classes> enrolledClasses = new ArrayList<>();
 
     public Students() {
     }

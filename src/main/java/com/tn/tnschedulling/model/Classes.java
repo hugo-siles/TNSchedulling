@@ -5,6 +5,7 @@
  */
 package com.tn.tnschedulling.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -23,6 +24,7 @@ public class Classes {
     private List<Students> registeredStudents;
 
     public Classes() {
+        registeredStudents = new ArrayList<>();
     }
 
     public String getCode() {

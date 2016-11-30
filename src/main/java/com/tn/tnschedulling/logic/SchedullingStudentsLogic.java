@@ -18,20 +18,19 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
-import javax.persistence.Query;
 
 /**
  *
  * @author hugo.siles
  */
 @Stateless
-public class SchedullingClassesLogic extends AbstracLogic {
+public class SchedullingStudentsLogic extends AbstracLogic {
     
     @PersistenceContext(unitName = "TNSchedullingPU")
     private EntityManager em;
 
-    public SchedullingClassesLogic() {
-        super(JpaClasses.class);
+    public SchedullingStudentsLogic() {
+        super(JpaStudents.class);
     }
     
     @Override
@@ -39,25 +38,25 @@ public class SchedullingClassesLogic extends AbstracLogic {
         return em;
     }
     
-    public void createClass(Classes entity) throws DaoException {
+    public void createStudent(Students entity) throws DaoException {
         try {
-            JpaClasses jpaClass = new ClassConverter().convertModelToJpa(entity);
-            super.create(jpaClass);
+            JpaStudents jpatudent = new StudentConverter().convertModelToJpa(entity);
+            super.create(jpatudent);
         } catch (PersistenceException pex){
             throw new DaoException("Object already exists in data base");
         }
     }
 
-    public void editClass(String id, Classes entity) throws DaoException {
+    public void editStudent(Integer id, Students entity) throws DaoException {
         try {
-            JpaClasses jpaClass = new ClassConverter().convertModelToJpa(entity);
+            JpaStudents jpaClass = new StudentConverter().convertModelToJpa(entity);
             super.edit(jpaClass);
         } catch (PersistenceException pex){
             throw new DaoException("Object already exists in data base");
         }
     }
 
-    public void removeClass(String id) throws DaoException {
+    public void removeStudent(Integer id) throws DaoException {
         try {
             super.remove(id);
         } catch (PersistenceException pex){
@@ -65,40 +64,39 @@ public class SchedullingClassesLogic extends AbstracLogic {
         }
     }
     
-    public Classes findClassByCode(String code) throws DaoException {
+    public Students findStudentById(Integer code) throws DaoException {
         
-        JpaClasses jpaClass = (JpaClasses) super.find(code);        
-        if (jpaClass == null){
+        JpaStudents jpaStudent = (JpaStudents) super.find(code);        
+        if (jpaStudent == null){
             throw new DaoException("entity not found in DB");
         }        
         
-        return new ClassConverter().convertJpaToModel(jpaClass);
+        return new StudentConverter().convertJpaToModel(jpaStudent);
     }
 
-    public List<Classes> findAllClasses() {
-        List<Classes> result = new ArrayList<>();
+    public List<Students> findAllStudents() {
+        List<Students> result = new ArrayList<>();
         
-        List<JpaClasses> existingClasses = super.findAll();        
-        for(JpaClasses jpaClass : existingClasses){
-            result.add(new ClassConverter().convertJpaToModel(jpaClass));
+        List<JpaStudents> existingClasses = super.findAll();        
+        for(JpaStudents jpaClass : existingClasses){
+            result.add(new StudentConverter().convertJpaToModel(jpaClass));
         }
         
         return result;       
         
     }
 
-    public List<Students> findStudentsInClass(String code) throws DaoException {
+    public List<Classes> findClassesForStudent(Integer id) throws DaoException {
         
-        List<Students> result = new ArrayList<>();
+        List<Classes> result = new ArrayList<>();
         
-        Query selectQuery = getEntityManager().createNativeQuery("select s.* from students s, students_classes sc "
-                + "where sc.class_code = ?1 and s.id = sc.student_id", JpaStudents.class);
+        JpaStudents jpaStudent = (JpaStudents) super.find(id);        
+        if (jpaStudent == null){
+            throw new DaoException("entity not found in DB");
+        } 
         
-        selectQuery.setParameter(1, code);
-        List<JpaStudents> studentsInDB = selectQuery.getResultList();
-        
-        for (JpaStudents jpaStudent : studentsInDB){
-            result.add(new StudentConverter().convertJpaToModel(jpaStudent));
+        for (JpaClasses jpaclass : jpaStudent.getClassesCollection()){
+            result.add(new ClassConverter().convertJpaToModel(jpaclass));
                     
         }
         
