@@ -22,13 +22,16 @@ public class ClassConverter {
             result.setCode(jpaClass.getCode());
             result.setTitle(jpaClass.getTitle());
             result.setDescription(jpaClass.getDescription());
+            
+            if (jpaClass.getStudentsCollection() != null) {
 
-            for (JpaStudent jpaStudents : jpaClass.getStudentsCollection()) {
-                Student newStudent = new Student();
-                newStudent.setId(jpaStudents.getId());
-                newStudent.setFirstName(jpaStudents.getFirstname());
-                newStudent.setLastName(jpaStudents.getLastname());
-                result.registerStudent(newStudent);
+                for (JpaStudent jpaStudents : jpaClass.getStudentsCollection()) {
+                    Student newStudent = new Student();
+                    newStudent.setId(jpaStudents.getId());
+                    newStudent.setFirstName(jpaStudents.getFirstname());
+                    newStudent.setLastName(jpaStudents.getLastname());
+                    result.registerStudent(newStudent);
+                }
             }
 
             return result;

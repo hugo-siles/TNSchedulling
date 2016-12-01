@@ -34,6 +34,11 @@ public class SchedullingClassService extends AbstracService {
     public SchedullingClassService() {
         super(JpaClass.class);
     }
+
+    SchedullingClassService(EntityManager em) {
+        super(JpaClass.class);
+        this.em = em;
+    }
     
     @Override
     protected EntityManager getEntityManager() {
@@ -45,7 +50,7 @@ public class SchedullingClassService extends AbstracService {
             JpaClass jpaClass = new ClassConverter().convertModelToJpa(entity);
             super.create(jpaClass);
         } catch (PersistenceException pex){
-            throw new DaoException("Object already exists in data base");
+            throw new DaoException("Object already exists in data base " + pex.getMessage());
         }
     }
 
@@ -54,15 +59,15 @@ public class SchedullingClassService extends AbstracService {
             JpaClass jpaClass = new ClassConverter().convertModelToJpa(entity);
             super.edit(jpaClass);
         } catch (PersistenceException pex){
-            throw new DaoException("Object already exists in data base");
+            throw new DaoException("Exception while saving class in DB " + pex.getMessage());
         }
     }
 
     public void removeClass(String id) throws DaoException {
         try {
-            super.remove(id);
+            super.remove(super.find(id));
         } catch (PersistenceException pex){
-            throw new DaoException("Object already exists in data base");
+            throw new DaoException("Exception while removing object from DB " + pex.getMessage());
         }
     }
     
@@ -89,22 +94,27 @@ public class SchedullingClassService extends AbstracService {
     }
 
     public List<Student> findStudentsInClass(String code) throws DaoException {
-        
+
         List<Student> result = new ArrayList<>();
-        
-        Query selectQuery = getEntityManager().createNativeQuery("select s.* from students s, students_classes sc "
-                + "where sc.class_code = ?1 and s.id = sc.student_id", JpaStudent.class);
-        
-        selectQuery.setParameter(1, code);
-        List<JpaStudent> studentsInDB = selectQuery.getResultList();
-        
-        for (JpaStudent jpaStudent : studentsInDB){
-            result.add(new StudentConverter().convertJpaToModel(jpaStudent));
-                    
+
+        try {
+            String query = "select s.* from students s, students_classes sc "
+                    + "where sc.class_code = ?1 and s.id = sc.student_id";
+            Query selectQuery = getEntityManager().createNativeQuery(query, JpaStudent.class);
+
+            selectQuery.setParameter(1, code);
+            List<JpaStudent> studentsInDB = selectQuery.getResultList();
+
+            for (JpaStudent jpaStudent : studentsInDB) {
+                result.add(new StudentConverter().convertJpaToModel(jpaStudent));
+            }
+
+        } catch (PersistenceException pex) {
+            throw new DaoException("Exception while retrieving objects from DB " + pex.getMessage());
         }
-        
+
         return result;
- 
+
         
     }
 }

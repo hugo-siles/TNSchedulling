@@ -19,16 +19,19 @@ public class StudentConverter {
         result.setId(jpaStudent.getId());
         result.setFirstName(jpaStudent.getFirstname());
         result.setLastName(jpaStudent.getLastname());
-        
-        for(JpaClass jpaClass : jpaStudent.getClassesCollection()) {
-            Class aClass = new Class();
-            aClass.setCode(jpaClass.getCode());
-            aClass.setTitle(jpaClass.getTitle());            
-            aClass.setDescription(jpaClass.getDescription());
-            
-            result.enrollToClass(aClass);
+
+        if (jpaStudent.getClassesCollection() != null) {
+
+            for (JpaClass jpaClass : jpaStudent.getClassesCollection()) {
+                Class aClass = new Class();
+                aClass.setCode(jpaClass.getCode());
+                aClass.setTitle(jpaClass.getTitle());
+                aClass.setDescription(jpaClass.getDescription());
+
+                result.enrollToClass(aClass);
+            }
         }
-        
+
         return result;
     }
     

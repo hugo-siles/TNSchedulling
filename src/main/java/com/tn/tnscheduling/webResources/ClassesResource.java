@@ -40,11 +40,7 @@ public class ClassesResource {
 
     public ClassesResource() {
     }
-
-    ClassesResource(SchedullingClassService logic) {
-        this.logic = logic;
-    }
-    
+ 
     @POST
     @Consumes({MediaType.APPLICATION_XML})
     public Response create(Class entity) {
