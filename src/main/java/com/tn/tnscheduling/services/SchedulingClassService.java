@@ -26,16 +26,16 @@ import javax.persistence.Query;
  * @author hugo.siles
  */
 @Stateless
-public class SchedullingClassService extends AbstracService {
+public class SchedulingClassService extends AbstracService {
     
-    @PersistenceContext(unitName = "TNSchedullingPU")
+    @PersistenceContext(unitName = "TNSchedulingPU")
     private EntityManager em;
 
-    public SchedullingClassService() {
+    public SchedulingClassService() {
         super(JpaClass.class);
     }
 
-    SchedullingClassService(EntityManager em) {
+    SchedulingClassService(EntityManager em) {
         super(JpaClass.class);
         this.em = em;
     }

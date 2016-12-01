@@ -123,7 +123,7 @@ public class JpaStudent implements Serializable {
 
     @Override
     public String toString() {
-        return "com.tn.tnschedulling.entities.JpaStudent[ id=" + id + " ]";
+        return "com.tn.tnscheduling.entities.JpaStudent[ id=" + id + " ]";
     }
     
 }

@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "JpaClass.findAll", query = "SELECT c FROM JpaClass c")
     , @NamedQuery(name = "JpaClass.findByCode", query = "SELECT c FROM JpaClass c WHERE c.code = :code")
     , @NamedQuery(name = "JpaClass.findByTitle", query = "SELECT c FROM JpaClass c WHERE c.title = :title")
-    , @NamedQuery(name = "JpaClass.findByDescription", query = "SELECT c FROM JpaClasses c WHERE c.description = :description")})
+    , @NamedQuery(name = "JpaClass.findByDescription", query = "SELECT c FROM JpaClass c WHERE c.description = :description")})
 public class JpaClass implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -119,7 +119,7 @@ public class JpaClass implements Serializable {
 
     @Override
     public String toString() {
-        return "com.tn.tnschedulling.entities.JpaClass[ code=" + code + " ]";
+        return "com.tn.tnscheduling.entities.JpaClass[ code=" + code + " ]";
     }
     
 }

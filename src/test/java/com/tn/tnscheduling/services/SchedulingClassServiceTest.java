@@ -18,8 +18,6 @@ import javax.persistence.Query;
 import javax.persistence.TransactionRequiredException;
 import org.easymock.EasyMock;
 import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.isA;
-import org.hamcrest.core.IsAnything;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -27,11 +25,11 @@ import static org.junit.Assert.*;
  *
  * @author hugo.siles
  */
-public class SchedullingClassServiceTest {
+public class SchedulingClassServiceTest {
     
     private final EntityManager mockManager;
     
-    public SchedullingClassServiceTest() {
+    public SchedulingClassServiceTest() {
         
         mockManager = EasyMock.createNiceMock(EntityManager.class);
     }
@@ -52,7 +50,7 @@ public class SchedullingClassServiceTest {
         
         EasyMock.replay(mockManager);
         
-        SchedullingClassService instance = new SchedullingClassService(mockManager);
+        SchedulingClassService instance = new SchedulingClassService(mockManager);
         instance.createClass(aClass);
         
         EasyMock.verify(mockManager);
@@ -75,7 +73,7 @@ public class SchedullingClassServiceTest {
         
         EasyMock.replay(mockManager);
         
-        SchedullingClassService instance = new SchedullingClassService(mockManager);
+        SchedulingClassService instance = new SchedulingClassService(mockManager);
         instance.createClass(aClass);
         
         EasyMock.verify(mockManager);
@@ -96,7 +94,7 @@ public class SchedullingClassServiceTest {
         
         EasyMock.replay(mockManager);
         
-        SchedullingClassService instance = new SchedullingClassService(mockManager);
+        SchedulingClassService instance = new SchedulingClassService(mockManager);
         instance.editClass("ABC", aClass);
         
         EasyMock.verify(mockManager);
@@ -118,7 +116,7 @@ public class SchedullingClassServiceTest {
         
         EasyMock.replay(mockManager);
         
-        SchedullingClassService instance = new SchedullingClassService(mockManager);
+        SchedulingClassService instance = new SchedulingClassService(mockManager);
         instance.editClass("ABC", aClass);
         
         EasyMock.verify(mockManager);
@@ -143,7 +141,7 @@ public class SchedullingClassServiceTest {
         
         EasyMock.replay(mockManager);
         
-        SchedullingClassService instance = new SchedullingClassService(mockManager);
+        SchedulingClassService instance = new SchedulingClassService(mockManager);
         instance.removeClass("ABC");
         
         EasyMock.verify(mockManager);
@@ -169,7 +167,7 @@ public class SchedullingClassServiceTest {
         
         EasyMock.replay(mockManager);
         
-        SchedullingClassService instance = new SchedullingClassService(mockManager);
+        SchedulingClassService instance = new SchedulingClassService(mockManager);
         instance.removeClass("ABC");
         
         EasyMock.verify(mockManager);
@@ -190,7 +188,7 @@ public class SchedullingClassServiceTest {
           
         EasyMock.replay(mockManager);
         
-        SchedullingClassService instance = new SchedullingClassService(mockManager);
+        SchedulingClassService instance = new SchedulingClassService(mockManager);
         Class result = instance.findClassByCode("ABC");
         assertEquals(expectedResult, result);
         
@@ -206,7 +204,7 @@ public class SchedullingClassServiceTest {
      
         EasyMock.replay(mockManager);
         
-        SchedullingClassService instance = new SchedullingClassService(mockManager);
+        SchedulingClassService instance = new SchedulingClassService(mockManager);
         instance.findClassByCode("ABC");
         
         EasyMock.verify(mockManager);
@@ -237,7 +235,7 @@ public class SchedullingClassServiceTest {
         
         EasyMock.replay(mockManager, mockQuery);
         
-        SchedullingClassService instance = new SchedullingClassService(mockManager);
+        SchedulingClassService instance = new SchedulingClassService(mockManager);
         List<Student> result = instance.findStudentsInClass("ABC");
         assertNotNull(result);
         assertEquals(3, result.size());
@@ -258,7 +256,7 @@ public class SchedullingClassServiceTest {
         
         EasyMock.replay(mockManager);
         
-        SchedullingClassService instance = new SchedullingClassService(mockManager);
+        SchedulingClassService instance = new SchedulingClassService(mockManager);
         instance.findStudentsInClass("ABC");
         
         EasyMock.verify(mockManager);

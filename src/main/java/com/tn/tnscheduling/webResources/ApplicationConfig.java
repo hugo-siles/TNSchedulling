@@ -12,7 +12,7 @@ import javax.ws.rs.core.Application;
  *
  * @author hugo.siles
  */
-@javax.ws.rs.ApplicationPath("TNSchedulling")
+@javax.ws.rs.ApplicationPath("TNScheduling")
 public class ApplicationConfig extends Application {
 
     @Override

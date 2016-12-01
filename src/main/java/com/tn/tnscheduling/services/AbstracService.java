@@ -31,7 +31,8 @@ public abstract class AbstracService<T> {
     }
 
     public void remove(T entity) {
-        getEntityManager().remove(getEntityManager().merge(entity));
+        T mergeEntity = getEntityManager().merge(entity);
+        getEntityManager().remove(mergeEntity);
     }
 
     public T find(Object id) {

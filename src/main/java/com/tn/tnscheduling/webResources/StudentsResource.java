@@ -7,7 +7,7 @@ package com.tn.tnscheduling.webResources;
 
 import com.tn.tnscheduling.exceptions.DaoException;
 import com.tn.tnscheduling.exceptions.ProcessException;
-import com.tn.tnscheduling.services.SchedullingStudentService;
+import com.tn.tnscheduling.services.SchedulingStudentService;
 import com.tn.tnscheduling.model.Class;
 import com.tn.tnscheduling.model.Student;
 import java.util.ArrayList;
@@ -36,17 +36,22 @@ import javax.ws.rs.core.Response;
 public class StudentsResource {
     
     @EJB
-    SchedullingStudentService logic;
+    SchedulingStudentService logic;
 
 
     public StudentsResource() {
     }
+    
+    @GET
+    @Produces({MediaType.APPLICATION_XML})
+    public List<Student> findAll() {
+        return logic.findAllStudents();
+    }
 
     @POST
     @Consumes({MediaType.APPLICATION_XML})
-    public Response create(Student entity) {
-        
-        Response result = Response.notModified().build();
+    public Response create(Student entity) {        
+        Response result = Response.status(Response.Status.NOT_MODIFIED).build();
         try {
             logic.createStudent(entity);
             result = Response.ok().build();
@@ -62,10 +67,10 @@ public class StudentsResource {
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML})
     public Response edit(@PathParam("id") Integer id, Student entity) {
-        Response result = Response.notModified().build();
+        Response result = Response.status(Response.Status.NOT_MODIFIED).build();
         try {
             logic.editStudent(id, entity);
-            result = Response.ok().build();
+            result = Response.status(Response.Status.NO_CONTENT).build();
         } catch (DaoException ex) {
              Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
                     "Exception while editing existing class", ex);
@@ -77,10 +82,10 @@ public class StudentsResource {
     @DELETE
     @Path("{id}")
     public Response remove(@PathParam("id") Integer id) {
-        Response result = Response.notModified().build();
+        Response result = Response.status(Response.Status.NO_CONTENT).build();
         try {
             logic.removeStudent(id);
-            result = Response.ok().build();
+            result = Response.status(Response.Status.OK).build();
         } catch (DaoException ex) {
              Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
                     "Exception while removing class with code: " + id, ex);
@@ -105,13 +110,7 @@ public class StudentsResource {
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML})
-    public List<Student> findAll() {
-        return logic.findAllStudents();
-    }
-
-    @GET
-    @Path("classesForStudent/{id}")
+    @Path("{id}/class")
     @Produces({MediaType.APPLICATION_XML})
     public List<Class> findClassesForStudent(@PathParam("id") Integer id) {
         
@@ -121,6 +120,48 @@ public class StudentsResource {
         } catch (DaoException ex) {
             Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
                     "Exception while retrieving information", ex);
+        } catch (ProcessException ex) {
+            Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
+                    "Exception while processing the information obtained ", ex);
+        }
+        
+        return result;
+    }
+    
+    @PUT
+    @Path("{id}/class/{code}")
+    @Produces({MediaType.APPLICATION_XML})
+    public Response registerStudentInClass(@PathParam("id") Integer id,
+                                           @PathParam("code") String code) {        
+                
+        Response result = Response.status(Response.Status.NOT_MODIFIED).build();
+        try {
+            logic.registerStudentInClass(id, code);
+            result = Response.status(Response.Status.NO_CONTENT).build();
+        } catch (DaoException ex) {
+             Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
+                    "Exception while removing class with code: " + id, ex);
+        } catch (ProcessException ex) {
+            Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
+                    "Exception while processing the information obtained ", ex);
+        }
+        
+        return result;
+    }
+    
+    @DELETE
+    @Path("{id}/class/{code}")
+    @Produces({MediaType.APPLICATION_XML})
+    public Response removeStudentFromClass(@PathParam("id") Integer id,
+                                           @PathParam("code") String code) {        
+                
+        Response result = Response.status(Response.Status.NO_CONTENT).build();
+        try {
+            logic.removeStudentFromClass(id, code);
+            result = Response.status(Response.Status.OK).build();
+        } catch (DaoException ex) {
+             Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
+                    "Exception while removing class with code: " + id, ex);
         } catch (ProcessException ex) {
             Logger.getLogger(ClassesResource.class.getName()).log(Level.SEVERE, 
                     "Exception while processing the information obtained ", ex);
