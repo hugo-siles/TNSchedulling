@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tn.tnscheduling.services;
+package com.tn.scheduling.services;
 
-import com.tn.tnscheduling.entities.JpaClass;
-import com.tn.tnscheduling.entities.JpaStudent;
-import com.tn.tnscheduling.exceptions.DaoException;
-import com.tn.tnscheduling.exceptions.ProcessException;
-import com.tn.tnscheduling.model.ClassConverter;
-import com.tn.tnscheduling.model.Class;
-import com.tn.tnscheduling.model.StudentConverter;
-import com.tn.tnscheduling.model.Student;
+import com.tn.scheduling.entities.JpaClass;
+import com.tn.scheduling.entities.JpaStudent;
+import com.tn.scheduling.exceptions.DaoException;
+import com.tn.scheduling.exceptions.ProcessException;
+import com.tn.scheduling.model.ClassConverter;
+import com.tn.scheduling.model.Class;
+import com.tn.scheduling.model.StudentConverter;
+import com.tn.scheduling.model.Student;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -115,8 +115,7 @@ public class SchedulingStudentService extends AbstracService {
         if (!jpaStudent.getClassesCollection().contains(jpaClass)){
             jpaStudent.getClassesCollection().add(jpaClass);
             super.edit(jpaClass);            
-        }
-        
+        }        
     }
 
     public void removeStudentFromClass(Integer id, String code) 

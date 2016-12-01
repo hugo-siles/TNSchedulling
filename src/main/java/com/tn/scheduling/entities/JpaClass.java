@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tn.tnscheduling.entities;
+package com.tn.scheduling.entities;
 
 import java.io.Serializable;
 import java.util.Collection;

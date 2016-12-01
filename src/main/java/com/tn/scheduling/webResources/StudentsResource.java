@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tn.tnscheduling.webResources;
+package com.tn.scheduling.webResources;
 
-import com.tn.tnscheduling.exceptions.DaoException;
-import com.tn.tnscheduling.exceptions.ProcessException;
-import com.tn.tnscheduling.services.SchedulingStudentService;
-import com.tn.tnscheduling.model.Class;
-import com.tn.tnscheduling.model.Student;
+import com.tn.scheduling.exceptions.DaoException;
+import com.tn.scheduling.exceptions.ProcessException;
+import com.tn.scheduling.services.SchedulingStudentService;
+import com.tn.scheduling.model.Class;
+import com.tn.scheduling.model.Student;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -110,7 +110,7 @@ public class StudentsResource {
     }
 
     @GET
-    @Path("{id}/class")
+    @Path("{id}/classes")
     @Produces({MediaType.APPLICATION_XML})
     public List<Class> findClassesForStudent(@PathParam("id") Integer id) {
         
@@ -129,7 +129,7 @@ public class StudentsResource {
     }
     
     @PUT
-    @Path("{id}/class/{code}")
+    @Path("{id}/classes/{code}")
     @Produces({MediaType.APPLICATION_XML})
     public Response registerStudentInClass(@PathParam("id") Integer id,
                                            @PathParam("code") String code) {        
@@ -150,7 +150,7 @@ public class StudentsResource {
     }
     
     @DELETE
-    @Path("{id}/class/{code}")
+    @Path("{id}/classes/{code}")
     @Produces({MediaType.APPLICATION_XML})
     public Response removeStudentFromClass(@PathParam("id") Integer id,
                                            @PathParam("code") String code) {        

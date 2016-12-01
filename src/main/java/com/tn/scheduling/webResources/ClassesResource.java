@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tn.tnscheduling.webResources;
+package com.tn.scheduling.webResources;
 
-import com.tn.tnscheduling.exceptions.DaoException;
-import com.tn.tnscheduling.exceptions.ProcessException;
-import com.tn.tnscheduling.services.SchedulingClassService;
-import com.tn.tnscheduling.model.Class;
-import com.tn.tnscheduling.model.Student;
+import com.tn.scheduling.exceptions.DaoException;
+import com.tn.scheduling.exceptions.ProcessException;
+import com.tn.scheduling.services.SchedulingClassService;
+import com.tn.scheduling.model.Class;
+import com.tn.scheduling.model.Student;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
